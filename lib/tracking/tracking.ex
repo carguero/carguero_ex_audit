@@ -1,4 +1,4 @@
-defmodule ExAudit.Tracking do
+defmodule CargueroExAudit.Tracking do
   def find_changes(action, struct_or_changeset, resulting_struct) do
     old =
       case {action, struct_or_changeset} do
@@ -27,9 +27,9 @@ defmodule ExAudit.Tracking do
       assocs = schema.__schema__(:associations)
 
       patch =
-        ExAudit.Diff.diff(
-          ExAudit.Tracker.map_struct(old) |> Map.drop(assocs),
-          ExAudit.Tracker.map_struct(new) |> Map.drop(assocs)
+        CargueroExAudit.Diff.diff(
+          CargueroExAudit.Tracker.map_struct(old) |> Map.drop(assocs),
+          CargueroExAudit.Tracker.map_struct(new) |> Map.drop(assocs)
         )
 
       case patch do
@@ -63,7 +63,7 @@ defmodule ExAudit.Tracking do
     now = DateTime.utc_now() |> with_precision()
 
     custom_fields =
-      Keyword.get(opts, :ex_audit_custom, [])
+      Keyword.get(opts, :carguero_ex_audit_custom, [])
       |> Enum.into(%{})
 
     changes =
@@ -112,7 +112,7 @@ defmodule ExAudit.Tracking do
   end
 
   defp with_precision(date) do
-    case precision = Application.get_env(:ex_audit, :precision) do
+    case precision = Application.get_env(:carguero_ex_audit, :precision) do
       nil -> date
       precision -> DateTime.truncate(date, precision)
     end
@@ -120,10 +120,10 @@ defmodule ExAudit.Tracking do
 
 
   defp tracked_schemas do
-    Application.get_env(:ex_audit, :tracked_schemas, [])
+    Application.get_env(:carguero_ex_audit, :tracked_schemas, [])
   end
 
   defp version_schema do
-    Application.get_env(:ex_audit, :version_schema)
+    Application.get_env(:carguero_ex_audit, :version_schema)
   end
 end

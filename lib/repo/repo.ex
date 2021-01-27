@@ -1,8 +1,8 @@
-defmodule ExAudit.Repo do
+defmodule CargueroExAudit.Repo do
   @moduledoc """
-  Adds ExAudit version tracking to your Ecto.Repo actions. The following functions are
+  Adds CargueroExAudit version tracking to your Ecto.Repo actions. The following functions are
   extended to detect if the given struct or changeset is in the list of :tracked_schemas
-  given in :ex_audit config:
+  given in :carguero_ex_audit config:
 
     insert: 2,
     update: 2,
@@ -19,7 +19,7 @@ defmodule ExAudit.Repo do
 
   ## How to use it.
 
-  Just `use ExAudit.Repo` after `Ecto.Repo`
+  Just `use CargueroExAudit.Repo` after `Ecto.Repo`
 
     ```elixir
     defmodule MyApp.Repo do
@@ -27,24 +27,24 @@ defmodule ExAudit.Repo do
         otp_app: :my_app,
         adapter: Ecto.Adapters.Postgres
 
-      use ExAudit.Repo
+      use CargueroExAudit.Repo
     end
     ```
 
   ## Shared options
 
-  All normal Ecto.Repo options will work the same, however, there are additional options specific to ex_audit:
+  All normal Ecto.Repo options will work the same, however, there are additional options specific to carguero_ex_audit:
 
-   * `:ex_audit_custom` - Keyword list of custom data that should be placed in new version entries. Entries in this
-     list overwrite data with the same keys from the ExAudit.track call
-   * `:ignore_audit` - If true, ex_audit will not track changes made to entities
+   * `:carguero_ex_audit_custom` - Keyword list of custom data that should be placed in new version entries. Entries in this
+     list overwrite data with the same keys from the CargueroExAudit.track call
+   * `:ignore_audit` - If true, carguero_ex_audit will not track changes made to entities
   """
 
   defmacro __using__(_opts) do
     quote location: :keep do
-      @behaviour ExAudit.Repo
+      @behaviour CargueroExAudit.Repo
 
-      # These are the Ecto.Repo functions that ExAudit "extends" but these are not
+      # These are the Ecto.Repo functions that CargueroExAudit "extends" but these are not
       # marked as overridable in Ecto.Repo. (ecto v3.4.2)
       defoverridable(
         insert: 2,
@@ -58,7 +58,7 @@ defmodule ExAudit.Repo do
       )
 
       defp tracked?(struct_or_changeset) do
-        tracked_schemas = Application.get_env(:ex_audit, :tracked_schemas, [])
+        tracked_schemas = Application.get_env(:carguero_ex_audit, :tracked_schemas, [])
 
         schema =
           case struct_or_changeset do
@@ -76,7 +76,7 @@ defmodule ExAudit.Repo do
 
       def insert(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.insert(
+          CargueroExAudit.Schema.insert(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -89,7 +89,7 @@ defmodule ExAudit.Repo do
 
       def update(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.update(
+          CargueroExAudit.Schema.update(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -102,7 +102,7 @@ defmodule ExAudit.Repo do
 
       def insert_or_update(changeset, opts) do
         if tracked?(changeset) do
-          ExAudit.Schema.insert_or_update(
+          CargueroExAudit.Schema.insert_or_update(
             __MODULE__,
             get_dynamic_repo(),
             changeset,
@@ -115,7 +115,7 @@ defmodule ExAudit.Repo do
 
       def delete(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.delete(
+          CargueroExAudit.Schema.delete(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -128,7 +128,7 @@ defmodule ExAudit.Repo do
 
       def insert!(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.insert!(
+          CargueroExAudit.Schema.insert!(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -141,7 +141,7 @@ defmodule ExAudit.Repo do
 
       def update!(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.update!(
+          CargueroExAudit.Schema.update!(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -154,7 +154,7 @@ defmodule ExAudit.Repo do
 
       def insert_or_update!(changeset, opts) do
         if tracked?(changeset) do
-          ExAudit.Schema.insert_or_update!(
+          CargueroExAudit.Schema.insert_or_update!(
             __MODULE__,
             get_dynamic_repo(),
             changeset,
@@ -167,7 +167,7 @@ defmodule ExAudit.Repo do
 
       def delete!(struct, opts) do
         if tracked?(struct) do
-          ExAudit.Schema.delete!(
+          CargueroExAudit.Schema.delete!(
             __MODULE__,
             get_dynamic_repo(),
             struct,
@@ -178,13 +178,13 @@ defmodule ExAudit.Repo do
         end
       end
 
-      # ExAudit.Repo behaviour
+      # CargueroExAudit.Repo behaviour
       def history(struct, opts \\ []) do
-        ExAudit.Queryable.history(__MODULE__, struct, opts)
+        CargueroExAudit.Queryable.history(__MODULE__, struct, opts)
       end
 
       def revert(version, opts \\ []) do
-        ExAudit.Queryable.revert(__MODULE__, version, opts)
+        CargueroExAudit.Queryable.revert(__MODULE__, version, opts)
       end
     end
   end

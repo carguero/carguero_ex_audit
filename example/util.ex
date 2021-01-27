@@ -1,5 +1,5 @@
-defmodule ExAudit.Test.Util do
-  alias ExAudit.Test.{Repo, User}
+defmodule CargueroExAudit.Test.Util do
+  alias CargueroExAudit.Test.{Repo, User}
 
   def create_user(name \\ "Admin", email \\ "admin@example.com") do
     params = %{name: name, email: email}

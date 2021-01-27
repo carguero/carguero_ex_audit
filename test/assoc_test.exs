@@ -3,12 +3,12 @@ defmodule AssocTest do
 
   import Ecto.Query
 
-  alias ExAudit.Test.{Repo, Version, BlogPost, Comment, Util, User, UserGroup}
+  alias CargueroExAudit.Test.{Repo, Version, BlogPost, Comment, Util, User, UserGroup}
 
   test "comment lifecycle tracked" do
     user = Util.create_user()
 
-    ExAudit.track(actor_id: user.id)
+    CargueroExAudit.track(actor_id: user.id)
 
     params = %{
       title: "Controversial post",
@@ -52,7 +52,7 @@ defmodule AssocTest do
   test "should track cascading deletions (before they happen)" do
     user = Util.create_user()
 
-    ExAudit.track(actor_id: user.id)
+    CargueroExAudit.track(actor_id: user.id)
 
     params = %{
       title: "Controversial post",

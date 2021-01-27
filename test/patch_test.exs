@@ -1,7 +1,7 @@
 defmodule PatchTest do
   use ExUnit.Case
 
-  alias ExAudit.{Diff, Patch}
+  alias CargueroExAudit.{Diff, Patch}
   doctest Patch
 
   test "should apply primitive changes" do

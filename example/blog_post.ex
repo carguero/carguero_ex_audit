@@ -1,14 +1,14 @@
-defmodule ExAudit.Test.BlogPost do
+defmodule CargueroExAudit.Test.BlogPost do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "blog_post" do
     field :title, :string
 
-    belongs_to :author, ExAudit.Test.User
-    embeds_many :sections, ExAudit.Test.BlogPost.Section
+    belongs_to :author, CargueroExAudit.Test.User
+    embeds_many :sections, CargueroExAudit.Test.BlogPost.Section
 
-    has_many :comments, ExAudit.Test.Comment, on_delete: :delete_all
+    has_many :comments, CargueroExAudit.Test.Comment, on_delete: :delete_all
 
     timestamps(type: :utc_datetime)
   end

@@ -1,11 +1,11 @@
-defprotocol ExAudit.Tracker do
+defprotocol CargueroExAudit.Tracker do
   @moduledoc """
   Enables you to influence which fields are tracked. In map_struct, remove or alter any fields
   you don't want tracked.
 
   Most of the time, you can just use 
   ```
-  @derive {ExAudit.Tracker, options}
+  @derive {CargueroExAudit.Tracker, options}
   ```
 
   where options is either: 
@@ -19,7 +19,7 @@ defprotocol ExAudit.Tracker do
   def map_struct(struct)
 end
 
-defimpl ExAudit.Tracker, for: Any do
+defimpl CargueroExAudit.Tracker, for: Any do
   @ignored_fields [:__meta__, :__struct__]
 
   defmacro __deriving__(module, struct, options) do
@@ -44,7 +44,7 @@ defimpl ExAudit.Tracker, for: Any do
       end
 
     quote do
-      defimpl ExAudit.Tracker, for: unquote(module) do
+      defimpl CargueroExAudit.Tracker, for: unquote(module) do
         def map_struct(struct) do
           unquote(extractor)
         end

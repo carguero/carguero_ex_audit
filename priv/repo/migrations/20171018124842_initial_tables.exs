@@ -1,4 +1,4 @@
-defmodule ExAudit.Test.Repo.Migrations.InitialTables do
+defmodule CargueroExAudit.Test.Repo.Migrations.InitialTables do
   use Ecto.Migration
 
   def change do

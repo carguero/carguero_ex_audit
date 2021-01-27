@@ -1,28 +1,28 @@
-defmodule ExAudit.Mixfile do
+defmodule CargueroExAudit.Mixfile do
   use Mix.Project
 
   def project do
     [
       description: "Ecto auditing library that transparently tracks changes and can revert them",
-      app: :ex_audit,
-      version: "0.7.0",
+      app: :carguero_ex_audit,
+      version: "0.0.1",
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: paths(Mix.env()),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [coveralls: :test],
-      source_url: "https://github.com/zenneriot/ex_audit",
+      source_url: "https://github.com/carguero/carguero_ex_audit",
       package: [
         licenses: ["MIT"],
-        maintainers: ["Moritz Schmale <ms@zenner-iot.com>"],
+        maintainers: ["Carguero Team"],
         links: %{
-          "GitHub" => "https://github.com/zenneriot/ex_audit",
-          "Documentation" => "https://hexdocs.pm/ex_audit"
+          "GitHub" => "https://github.com/carguero/carguero_ex_audit",
+          "Documentation" => "https://hexdocs.pm/carguero_ex_audit"
         }
       ],
       docs: [
-        main: "ExAudit",
+        main: "CargueroExAudit",
         extras: ["README.md"]
       ]
     ]
@@ -41,7 +41,7 @@ defmodule ExAudit.Mixfile do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {ExAudit, []},
+      mod: {CargueroExAudit, []},
       extra_applications: [:logger]
     ]
   end
@@ -54,7 +54,8 @@ defmodule ExAudit.Mixfile do
       {:postgrex, "~> 0.15", only: :test},
       {:excoveralls, "~> 0.7", only: :test},
       {:ex_doc, "~> 0.21", runtime: false, only: :dev},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
+      {:rename, "~> 0.1.0", only: :dev}
     ]
   end
 end

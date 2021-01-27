@@ -1,4 +1,4 @@
-defmodule ExAudit.Diff do
+defmodule CargueroExAudit.Diff do
   @type addition :: {:added, term}
   @type removal :: {:removed, term}
   @type change :: {:changed, changes}
@@ -22,7 +22,7 @@ defmodule ExAudit.Diff do
   @undefined :"$undefined"
 
   @doc """
-  Creates a patch that can be used to go from a to b with the ExAudit.Patch.patch function
+  Creates a patch that can be used to go from a to b with the CargueroExAudit.Patch.patch function
   """
   @spec diff(term, term) :: changes
   def diff(a, b)
@@ -141,7 +141,7 @@ defmodule ExAudit.Diff do
   ## PRIVATE
 
   defp primitive_struct?(type) do
-    primitive_structs = Application.get_env(:ex_audit, :primitive_structs, [])
+    primitive_structs = Application.get_env(:carguero_ex_audit, :primitive_structs, [])
 
     type in primitive_structs
   end

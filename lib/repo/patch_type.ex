@@ -1,4 +1,4 @@
-defmodule ExAudit.Type.Patch do
+defmodule CargueroExAudit.Type.Patch do
   use Ecto.Type
 
   def cast(a), do: {:ok, a}

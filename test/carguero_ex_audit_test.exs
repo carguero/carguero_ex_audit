@@ -1,10 +1,10 @@
-defmodule ExAuditTest do
+defmodule CargueroExAuditTest do
   use ExUnit.Case
-  doctest ExAudit
+  doctest CargueroExAudit
 
   import Ecto.Query
 
-  alias ExAudit.Test.{Repo, User, Version, BlogPost, Util}
+  alias CargueroExAudit.Test.{Repo, User, Version, BlogPost, Util}
 
   test "should document lifecycle of an entity" do
     params = %{
@@ -79,7 +79,7 @@ defmodule ExAuditTest do
         title: "My First Post"
       })
 
-    {:ok, blog_post} = Repo.insert(changeset, ex_audit_custom: [actor_id: user.id])
+    {:ok, blog_post} = Repo.insert(changeset, carguero_ex_audit_custom: [actor_id: user.id])
 
     version =
       Repo.one(
@@ -210,7 +210,7 @@ defmodule ExAuditTest do
         title: "My Second Post"
       })
 
-    ExAudit.track(actor_id: user.id)
+    CargueroExAudit.track(actor_id: user.id)
 
     {:ok, blog_post} = Repo.insert(changeset)
 

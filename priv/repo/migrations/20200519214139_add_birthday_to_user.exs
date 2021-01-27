@@ -1,4 +1,4 @@
-defmodule ExAudit.Test.Repo.Migrations.AddBirthdayToUser do
+defmodule CargueroExAudit.Test.Repo.Migrations.AddBirthdayToUser do
   use Ecto.Migration
 
   def change do

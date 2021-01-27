@@ -1,4 +1,4 @@
-defmodule ExAudit.Test.Repo.Migrations.TransientField do
+defmodule CargueroExAudit.Test.Repo.Migrations.TransientField do
   use Ecto.Migration
 
   def change do

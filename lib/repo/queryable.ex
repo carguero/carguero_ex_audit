@@ -1,8 +1,8 @@
-defmodule ExAudit.Queryable do
+defmodule CargueroExAudit.Queryable do
   require Logger
 
   defp version_schema() do
-    Application.get_env(:ex_audit, :version_schema)
+    Application.get_env(:carguero_ex_audit, :version_schema)
   end
 
   @compile {:inline, version_schema: 0}
@@ -127,7 +127,7 @@ defmodule ExAudit.Queryable do
       end
 
     opts =
-      Keyword.update(opts, :ex_audit_custom, [rollback: true], fn custom ->
+      Keyword.update(opts, :carguero_ex_audit_custom, [rollback: true], fn custom ->
         [{:rollback, true} | custom]
       end)
 
@@ -158,11 +158,11 @@ defmodule ExAudit.Queryable do
   end
 
   defp _revert(version, struct) do
-    apply_change(reverse_action(version.action), ExAudit.Diff.reverse(version.patch), struct)
+    apply_change(reverse_action(version.action), CargueroExAudit.Diff.reverse(version.patch), struct)
   end
 
   defp apply_change(:updated, patch, to) do
-    ExAudit.Patch.patch(to, patch)
+    CargueroExAudit.Patch.patch(to, patch)
   end
 
   defp apply_change(:deleted, _patch, _to) do
@@ -170,7 +170,7 @@ defmodule ExAudit.Queryable do
   end
 
   defp apply_change(:created, patch, _to) do
-    ExAudit.Patch.patch(%{}, patch)
+    CargueroExAudit.Patch.patch(%{}, patch)
   end
 
   defp reverse_action(:updated), do: :updated

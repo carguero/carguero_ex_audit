@@ -3,12 +3,12 @@ defmodule RevertTest do
 
   import Ecto.Query
 
-  alias ExAudit.Test.{Repo, User, Version, Util}
+  alias CargueroExAudit.Test.{Repo, User, Version, Util}
 
   test "should revert changes" do
     user = Util.create_user()
 
-    ExAudit.track(actor_id: user.id)
+    CargueroExAudit.track(actor_id: user.id)
 
     user2 = Util.create_user("Horst Dieter Schaf", "horst.dieter@schaf.de")
 

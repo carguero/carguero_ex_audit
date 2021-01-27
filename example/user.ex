@@ -1,8 +1,8 @@
-defmodule ExAudit.Test.User do
+defmodule CargueroExAudit.Test.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {ExAudit.Tracker, except: [:transient_field]}
+  @derive {CargueroExAudit.Tracker, except: [:transient_field]}
 
   schema "users" do
     field :email, :string
@@ -11,7 +11,7 @@ defmodule ExAudit.Test.User do
 
     field :transient_field, :integer
 
-    has_many :groups, ExAudit.Test.UserGroup
+    has_many :groups, CargueroExAudit.Test.UserGroup
 
     timestamps()
   end

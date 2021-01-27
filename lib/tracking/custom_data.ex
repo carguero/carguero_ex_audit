@@ -1,4 +1,4 @@
-defmodule ExAudit.CustomData do
+defmodule CargueroExAudit.CustomData do
   use GenServer
 
   @moduledoc """

@@ -1,14 +1,14 @@
-defmodule ExAudit do
+defmodule CargueroExAudit do
   use Application
 
   def start(_, _) do
     import Supervisor.Spec
 
     children = [
-      worker(ExAudit.CustomData, [])
+      worker(CargueroExAudit.CustomData, [])
     ]
 
-    opts = [strategy: :one_for_one, name: ExAudit.Supervisor]
+    opts = [strategy: :one_for_one, name: CargueroExAudit.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
@@ -23,6 +23,6 @@ defmodule ExAudit do
   Tracks the given keyword list of data for the given process
   """
   def track_pid(pid, data) do
-    ExAudit.CustomData.track(pid, data)
+    CargueroExAudit.CustomData.track(pid, data)
   end
 end

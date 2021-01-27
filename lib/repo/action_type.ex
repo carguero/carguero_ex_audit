@@ -1,4 +1,4 @@
-defmodule ExAudit.Type.Action do
+defmodule CargueroExAudit.Type.Action do
   use Ecto.Type
 
   @actions ~w[created updated deleted]a

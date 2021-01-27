@@ -1,17 +1,17 @@
-defmodule ExAudit.Test.Version do
+defmodule CargueroExAudit.Test.Version do
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "versions" do
-    field :patch, ExAudit.Type.Patch
+    field :patch, CargueroExAudit.Type.Patch
     field :entity_id, :integer
-    field :entity_schema, ExAudit.Type.Schema
-    field :action, ExAudit.Type.Action
+    field :entity_schema, CargueroExAudit.Type.Schema
+    field :action, CargueroExAudit.Type.Action
     field :recorded_at, :utc_datetime_usec
     field :rollback, :boolean, default: false
 
     # custom fields
-    belongs_to :actor, ExAudit.Test.User
+    belongs_to :actor, CargueroExAudit.Test.User
   end
 
   def changeset(struct, params \\ %{}) do

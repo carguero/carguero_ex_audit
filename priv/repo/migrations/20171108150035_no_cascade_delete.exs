@@ -1,4 +1,4 @@
-defmodule ExAudit.Test.Repo.Migrations.NoCascadeDelete do
+defmodule CargueroExAudit.Test.Repo.Migrations.NoCascadeDelete do
   use Ecto.Migration
 
   def change do

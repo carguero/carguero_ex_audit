@@ -1,7 +1,7 @@
 defmodule DiffTest do
   use ExUnit.Case
 
-  alias ExAudit.Diff
+  alias CargueroExAudit.Diff
   doctest Diff
 
   test "should diff primitives" do

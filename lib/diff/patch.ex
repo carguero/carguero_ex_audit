@@ -1,4 +1,4 @@
-defmodule ExAudit.Patch do
+defmodule CargueroExAudit.Patch do
   @doc """
   Applies the patch to the given term
   """

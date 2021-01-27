@@ -1,4 +1,4 @@
-defmodule ExAudit.Type.Schema do
+defmodule CargueroExAudit.Type.Schema do
   use Ecto.Type
 
   def cast(schema) when is_atom(schema) do
@@ -38,6 +38,6 @@ defmodule ExAudit.Type.Schema do
   def type, do: :string
 
   defp schemas do
-    Application.get_env(:ex_audit, :tracked_schemas, [])
+    Application.get_env(:carguero_ex_audit, :tracked_schemas, [])
   end
 end

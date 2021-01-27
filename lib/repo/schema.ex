@@ -1,4 +1,4 @@
-defmodule ExAudit.Schema do
+defmodule CargueroExAudit.Schema do
   def insert_all(module, name, schema_or_source, entries, opts) do
     # TODO!
     opts = augment_opts(opts)
@@ -13,7 +13,7 @@ defmodule ExAudit.Schema do
 
       case result do
         {:ok, resulting_struct} ->
-          ExAudit.Tracking.track_change(module, :created, struct, resulting_struct, opts)
+          CargueroExAudit.Tracking.track_change(module, :created, struct, resulting_struct, opts)
 
         _ ->
           :ok
@@ -31,7 +31,7 @@ defmodule ExAudit.Schema do
 
       case result do
         {:ok, resulting_struct} ->
-          ExAudit.Tracking.track_change(module, :updated, struct, resulting_struct, opts)
+          CargueroExAudit.Tracking.track_change(module, :updated, struct, resulting_struct, opts)
 
         _ ->
           :ok
@@ -50,7 +50,7 @@ defmodule ExAudit.Schema do
       case result do
         {:ok, resulting_struct} ->
           state = if changeset.data.__meta__.state == :loaded, do: :updated, else: :created
-          ExAudit.Tracking.track_change(module, state, changeset, resulting_struct, opts)
+          CargueroExAudit.Tracking.track_change(module, state, changeset, resulting_struct, opts)
 
         _ ->
           :ok
@@ -64,12 +64,12 @@ defmodule ExAudit.Schema do
     opts = augment_opts(opts)
 
     augment_transaction(module, fn ->
-      ExAudit.Tracking.track_assoc_deletion(module, struct, opts)
+      CargueroExAudit.Tracking.track_assoc_deletion(module, struct, opts)
       result = Ecto.Repo.Schema.delete(module, name, struct, opts)
 
       case result do
         {:ok, resulting_struct} ->
-          ExAudit.Tracking.track_change(module, :deleted, struct, resulting_struct, opts)
+          CargueroExAudit.Tracking.track_change(module, :deleted, struct, resulting_struct, opts)
 
         _ ->
           :ok
@@ -86,7 +86,7 @@ defmodule ExAudit.Schema do
       module,
       fn ->
         result = Ecto.Repo.Schema.insert!(module, name, struct, opts)
-        ExAudit.Tracking.track_change(module, :created, struct, result, opts)
+        CargueroExAudit.Tracking.track_change(module, :created, struct, result, opts)
         result
       end,
       true
@@ -100,7 +100,7 @@ defmodule ExAudit.Schema do
       module,
       fn ->
         result = Ecto.Repo.Schema.update!(module, name, struct, opts)
-        ExAudit.Tracking.track_change(module, :updated, struct, result, opts)
+        CargueroExAudit.Tracking.track_change(module, :updated, struct, result, opts)
         result
       end,
       true
@@ -115,7 +115,7 @@ defmodule ExAudit.Schema do
       fn ->
         result = Ecto.Repo.Schema.insert_or_update!(module, name, changeset, opts)
         state = if changeset.data.__meta__.state == :loaded, do: :updated, else: :created
-        ExAudit.Tracking.track_change(module, state, changeset, result, opts)
+        CargueroExAudit.Tracking.track_change(module, state, changeset, result, opts)
         result
       end,
       true
@@ -128,9 +128,9 @@ defmodule ExAudit.Schema do
     augment_transaction(
       module,
       fn ->
-        ExAudit.Tracking.track_assoc_deletion(module, struct, opts)
+        CargueroExAudit.Tracking.track_assoc_deletion(module, struct, opts)
         result = Ecto.Repo.Schema.delete!(module, name, struct, opts)
-        ExAudit.Tracking.track_change(module, :deleted, struct, result, opts)
+        CargueroExAudit.Tracking.track_change(module, :deleted, struct, result, opts)
         result
       end,
       true
@@ -166,11 +166,11 @@ defmodule ExAudit.Schema do
 
   defp augment_opts(opts) do
     opts
-    |> Keyword.put_new(:ex_audit_custom, [])
-    |> Keyword.update(:ex_audit_custom, [], fn custom_fields ->
-      case Process.whereis(ExAudit.CustomData) do
+    |> Keyword.put_new(:carguero_ex_audit_custom, [])
+    |> Keyword.update(:carguero_ex_audit_custom, [], fn custom_fields ->
+      case Process.whereis(CargueroExAudit.CustomData) do
         nil -> []
-        _ -> ExAudit.CustomData.get()
+        _ -> CargueroExAudit.CustomData.get()
       end ++ custom_fields
     end)
   end

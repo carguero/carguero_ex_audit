@@ -1,7 +1,7 @@
-defmodule ExAudit.Test.Repo do
+defmodule CargueroExAudit.Test.Repo do
   use Ecto.Repo,
-    otp_app: :ex_audit,
+    otp_app: :carguero_ex_audit,
     adapter: Ecto.Adapters.Postgres
 
-  use ExAudit.Repo
+  use CargueroExAudit.Repo
 end

@@ -1,8 +1,8 @@
-# ExAudit
+# CargueroExAudit
 
 Ecto auditing library that transparently tracks changes and can revert them.
 
-ExAudit plugs right into your ecto repositories and hooks all the data mutating Ecto.Repo functions
+CargueroExAudit plugs right into your ecto repositories and hooks all the data mutating Ecto.Repo functions
 to track changes to entities in your database.
 
 ## Features
@@ -16,7 +16,7 @@ to track changes to entities in your database.
 
 ## Usage
 
-ExAudit replaces some functions in your repo module:
+CargueroExAudit replaces some functions in your repo module:
 
 - `insert/2`
 - `insert!/2`
@@ -35,27 +35,27 @@ Also, new functions are added to the repository:
 
 With this API, you should be able to enable auditing across your entire application easily.
 
-If for some reason ExAudit does not track a change, you can manually add it with
-`ExAudit.Tracking.track_change(module, adapter, action, changeset, resulting_struct, opts)`.
+If for some reason CargueroExAudit does not track a change, you can manually add it with
+`CargueroExAudit.Tracking.track_change(module, adapter, action, changeset, resulting_struct, opts)`.
 
 In the same module, there are a few other functions you might find useful to roll custom
 tracking.
 
 ## Setup
 
-Add ex_audit to your list of dependencies:
+Add carguero_ex_audit to your list of dependencies:
 
 ```elixir
 def deps do
   [
-    {:ex_audit, "~> 0.7"}
+    {:carguero_ex_audit, "~> 0.7"}
   ]
 end
 ```
 
 For older ecto versions than 3.2, check out what to do in the [Ecto Versions](#ecto-versions) section.
 
-You have to hook `ExAudit.Repo` to your repo:
+You have to hook `CargueroExAudit.Repo` to your repo:
 
 ```elixir
 defmodule MyApp.Repo do
@@ -63,18 +63,18 @@ defmodule MyApp.Repo do
     otp_app: :my_app,
     adapter: Ecto.Adapters.Postgres
 
-  use ExAudit.Repo
+  use CargueroExAudit.Repo
 end
 ```
 
 ### Configuration
 
-You have to tell ExAudit which schemas to track and the module of your version schema.
+You have to tell CargueroExAudit which schemas to track and the module of your version schema.
 
 In your config.exs, write something like this:
 
 ```elixir
-config :ex_audit,
+config :carguero_ex_audit,
   version_schema: MyApp.Version,
   tracked_schemas: [
     MyApp.User,
@@ -83,18 +83,18 @@ config :ex_audit,
   ]
 ```
 
-Optionally, you can tell ExAudit to treat certain structs as primitives and not record internal changes for the 
+Optionally, you can tell CargueroExAudit to treat certain structs as primitives and not record internal changes for the 
 struct. Add these under the key `:primitive_structs` in your config. So for example, if you configured `Date` to be treated as a primitive:
 
 ```elixir
-config :ex_audit,
-  ecto_repos: [ExAudit.Test.Repo],
-  version_schema: ExAudit.Test.Version,
+config :carguero_ex_audit,
+  ecto_repos: [CargueroExAudit.Test.Repo],
+  version_schema: CargueroExAudit.Test.Version,
   tracked_schemas: [
-    ExAudit.Test.User,
-    ExAudit.Test.BlogPost,
-    ExAudit.Test.BlogPost.Section,
-    ExAudit.Test.Comment
+    CargueroExAudit.Test.User,
+    CargueroExAudit.Test.BlogPost,
+    CargueroExAudit.Test.BlogPost.Section,
+    CargueroExAudit.Test.Comment
   ],
   primitive_structs: [
     Date
@@ -127,16 +127,16 @@ defmodule MyApp.Version do
 
   schema "versions" do
     # The patch in Erlang External Term Format
-    field :patch, ExAudit.Type.Patch
+    field :patch, CargueroExAudit.Type.Patch
 
     # supports UUID and other types as well
     field :entity_id, :integer
 
     # name of the table the entity is in
-    field :entity_schema, ExAudit.Type.Schema
+    field :entity_schema, CargueroExAudit.Type.Schema
 
     # type of the action that has happened to the entity (created, updated, deleted)
-    field :action, ExAudit.Type.Action
+    field :action, CargueroExAudit.Type.Action
 
     # when has this happened
     field :recorded_at, :utc_datetime
@@ -196,30 +196,30 @@ end
 ### Recording custom data
 
 If you want to track custom data such as the user id, you can simply pass a keyword list with that data
-to the `:ex_audit_custom` option in any Repo function:
+to the `:carguero_ex_audit_custom` option in any Repo function:
 
 ```elixir
-MyApp.Repo.insert(changeset, ex_audit_custom: [user_id: conn.assigns.current_user.id])
+MyApp.Repo.insert(changeset, carguero_ex_audit_custom: [user_id: conn.assigns.current_user.id])
 ```
 
 Of course it is tedious to upgrade your entire codebase just to track the user ID for example, so you can
 also pass this data in a plug:
 
 ```elixir
-defmodule MyApp.ExAuditPlug do
+defmodule MyApp.CargueroExAuditPlug do
   def init(_) do
     nil
   end
 
   def call(conn, _) do
-    ExAudit.track(user_id: conn.assigns.current_user.id)
+    CargueroExAudit.track(user_id: conn.assigns.current_user.id)
     conn
   end
 end
 ```
 
-In the background, ExAudit.track will remember the PID it was called from and attaches the passed data to that
-PID. In most cases, the conn process will call the Repo functions, so ExAudit can get the data from that PID again deeper
+In the background, CargueroExAudit.track will remember the PID it was called from and attaches the passed data to that
+PID. In most cases, the conn process will call the Repo functions, so CargueroExAudit can get the data from that PID again deeper
 in the plug tree.
 
 In some cases where it is not possible to call the Repo function from the conn process, you have to pass the
@@ -233,18 +233,18 @@ Examples for data you might want to track additionally:
 
 ## Ecto versions
 
-For ecto 2.x, use `{:ex_audit, "~> 0.5"}`
+For ecto 2.x, use `{:carguero_ex_audit, "~> 0.5"}`
 
 For ecto 3.0, upgrade ecto to 3.1
 
-For ecto 3.1, use `{:ex_audit, "~> 0.6"}`
+For ecto 3.1, use `{:carguero_ex_audit, "~> 0.6"}`
 
 For ecto 3.1.2 or higher, upgrade ecto to 3.2
 
-For ecto 3.2, use `{:ex_audit, "~> 0.7"}`
+For ecto 3.2, use `{:carguero_ex_audit, "~> 0.7"}`
 
 ## More
 
-The documentation is available at [https://hexdocs.pm/ex_audit](https://hexdocs.pm/ex_audit).
+The documentation is available at [https://hexdocs.pm/carguero_ex_audit](https://hexdocs.pm/carguero_ex_audit).
 
 Check out [ZENNER IoT Solutions](https://zenner-iot.com/), makers of the [ELEMENT IoT platform](https://zenner-iot.com/iot-plattform).
