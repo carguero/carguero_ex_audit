@@ -52,10 +52,7 @@ defmodule CargueroExAudit.Mixfile do
       {:ecto, "~> 3.4"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, "~> 0.15", only: :test},
-      {:excoveralls, "~> 0.7", only: :test},
-      {:ex_doc, "~> 0.21", runtime: false, only: :dev},
-      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false},
-      {:rename, "~> 0.1.0", only: :dev}
+      {:mix_test_watch, "~> 1.0", only: :dev, runtime: false}
     ]
   end
 end
